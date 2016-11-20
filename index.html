@@ -59,6 +59,66 @@
 
   
     
+    <h3 class="article-title"><a href="/2016/11/20/lack-of-free-swap-space/"><span>lack_of_free_swap_space</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/11/20/lack-of-free-swap-space/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-11-20T01:54:58.000Z">
+          2016-11-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>有天收到zabbix的警告，发现有台服务器的Free swan space 少于20%.<br>Lack of free swap space on hostname.<br>swap space交换空间默认是1G已经不够用，服务器有4G，所以决定把swap space调大。</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h5 id="查看内存情况"><a href="#查看内存情况" class="headerlink" title="查看内存情况"></a>查看内存情况</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ free -m</div></pre></td></tr></table></figure>
+<h5 id="创建一个分区添加交换文件"><a href="#创建一个分区添加交换文件" class="headerlink" title="创建一个分区添加交换文件"></a>创建一个分区添加交换文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir -p /opt/temp</div><div class="line">$ dd <span class="keyword">if</span>=/dev/zero of=/opt/temp/swap bs=1024 count=2048000</div></pre></td></tr></table></figure>
+<h5 id="创建交换空间"><a href="#创建交换空间" class="headerlink" title="创建交换空间"></a>创建交换空间</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mkswap /opt/temp/swap</div></pre></td></tr></table></figure>
+<h5 id="启动新的2G交换空间"><a href="#启动新的2G交换空间" class="headerlink" title="启动新的2G交换空间"></a>启动新的2G交换空间</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ swapon /opt/temp/swap</div><div class="line">$ free -m</div></pre></td></tr></table></figure>
+<h5 id="修改-etc-fstab，使新加的2G交换空间在系统重新启动后自动生效"><a href="#修改-etc-fstab，使新加的2G交换空间在系统重新启动后自动生效" class="headerlink" title="修改/etc/fstab，使新加的2G交换空间在系统重新启动后自动生效"></a>修改/etc/fstab，使新加的2G交换空间在系统重新启动后自动生效</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">echo</span> <span class="string">"/opt/temp/swap swap swap defaults 0 0"</span> &gt;&gt;/etc/fstab</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="2016/11/20/lack-of-free-swap-space/#comment">Comments</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2016/11/12/module-not-found-for-hexo/"><span>hexo shows error message</span></a></h3>
     
   
